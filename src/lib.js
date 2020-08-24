@@ -45,7 +45,15 @@ class Migrator {
     const defaultTemplate = migrationTemplate;
     this.template = templatePath ? fs.readFileSync(templatePath, 'utf-8') : defaultTemplate;
     this.migrationPath = path.resolve(migrationsPath);
-    this.connection = connection || mongoose.createConnection(dbConnectionUri, { useNewUrlParser: true });
+    this.connection = connection || mongoose.createConnection(dbConnectionUri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      useCreateIndex: true,
+      ssl: true,
+      sslValidate: false,
+      sslCA: fs.readFileSync('/digiex/api/src/model/.aws/db_ssl.pem')
+    });
     this.collection = collectionName;
     this.autosync = autosync;
     this.cli = cli;
