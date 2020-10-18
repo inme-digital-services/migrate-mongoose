@@ -1,4 +1,5 @@
 const fs = require('fs');
+const homedir = require('os').homedir();
 const path = require('path');
 
 require('colors')
@@ -52,7 +53,7 @@ class Migrator {
       useCreateIndex: true,
       ssl: true,
       sslValidate: false,
-      sslCA: fs.readFileSync('/digiex/api/src/model/.aws/db_ssl.pem')
+      sslCA: fs.readFileSync(`${homedir}/.aws/db_ssl.pem`)
     });
     this.collection = collectionName;
     this.autosync = autosync;
